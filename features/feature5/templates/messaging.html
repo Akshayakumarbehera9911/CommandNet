@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Military Communication System - Military WebApp{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/feature5.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="messaging-container">
+    <!-- Header -->
+    <div class="messaging-header">
+        <h1>SECURE COMMUNICATION SYSTEM</h1>
+        <p>{{ role.title() }} Access | Real-time Military Messaging</p>
+        <button onclick="goBack()" class="back-btn">← BACK TO DASHBOARD</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="messaging-content">
+        <!-- Left Panel - Message Compose -->
+        <div class="compose-panel">
+            <h2>COMPOSE MESSAGE</h2>
+            
+            <!-- Message Type Selector -->
+            <div class="message-type-section">
+                <label class="message-type-label">MESSAGE TYPE:</label>
+                <div class="message-type-options">
+                    <label class="radio-option">
+                        <input type="radio" name="messageType" value="direct" id="directMessage" checked>
+                        <span>DIRECT MESSAGE</span>
+                    </label>
+                    {% if role == 'captain' %}
+                    <label class="radio-option">
+                        <input type="radio" name="messageType" value="broadcast" id="broadcastMessage">
+                        <span>BROADCAST TO ALL</span>
+                    </label>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Recipient Selector -->
+            <div class="recipient-section" id="recipientSection">
+                <label for="recipientSelect">TO:</label>
+                <select id="recipientSelect">
+                    <option value="">Select recipient...</option>
+                    {% for user in available_users %}
+                        <option value="{{ user }}">{{ user.upper() }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Message Input -->
+            <div class="message-input-section">
+                <label for="messageInput">MESSAGE:</label>
+                <textarea id="messageInput" placeholder="Enter your message here..." maxlength="500"></textarea>
+                <div class="character-count">
+                    <span id="charCount">0</span>/500 characters
+                </div>
+            </div>
+
+            <!-- Send Button -->
+            <button id="sendMessageBtn" class="send-btn" onclick="sendMessage()">
+                SEND MESSAGE
+            </button>
+
+            <!-- Status Display -->
+            <div id="sendStatus" class="send-status"></div>
+        </div>
+
+        <!-- Right Panel - Messages -->
+        <div class="messages-panel">
+            <div class="messages-header">
+                <h2>MESSAGES</h2>
+                <div class="message-stats">
+                    <span class="unread-badge" id="unreadBadge">{{ unread_count }} UNREAD</span>
+                    <button onclick="refreshMessages()" class="refresh-btn">⟳ REFRESH</button>
+                </div>
+            </div>
+
+            <!-- Messages List -->
+            <div class="messages-list" id="messagesList">
+                {% for message in messages %}
+                <div class="message-item {% if message.message_type == 'sent' %}sent{% else %}received{% endif %} {% if not message.is_read and message.message_type == 'received' %}unread{% endif %}" 
+                     data-message-id="{{ message.id }}">
+                    
+                    <div class="message-header">
+                        {% if message.message_type == 'sent' %}
+                            <span class="message-direction">TO: {{ message.recipient.upper() if message.recipient else 'ALL SOLDIERS' }}</span>
+                        {% else %}
+                            <span class="message-direction">FROM: {{ message.sender.upper() }}</span>
+                        {% endif %}
+                        
+                        {% if message.is_broadcast %}
+                            <span class="broadcast-badge">BROADCAST</span>
+                        {% endif %}
+                        
+                        <span class="message-time">{{ message.timestamp[:19].replace('T', ' ') }}</span>
+                    </div>
+                    
+                    <div class="message-content">
+                        {{ message.message }}
+                    </div>
+                    
+                    {% if not message.is_read and message.message_type == 'received' %}
+                        <div class="unread-indicator">NEW</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                
+                {% if not messages %}
+                <div class="no-messages">
+                    <p>NO MESSAGES AVAILABLE</p>
+                    <p>Send your first message to start communicating</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentUser = '{{ username }}';
+    let currentRole = '{{ role }}';
+    
+    function goBack() {
+        window.location.href = '/dashboard';
+    }
+</script>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/feature5.js') }}?v=1"></script>
+{% endblock %}

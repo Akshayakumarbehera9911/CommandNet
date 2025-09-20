@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Camouflage Detection System - Military WebApp{% endblock %}
+
+{% block content %}
+<div class="feature6-container">
+    <!-- Header -->
+    <div class="feature-header">
+        <h1>CAMOUFLAGE DETECTION SYSTEM</h1>
+        <p>Advanced AI-Powered Camouflaged Object Detection</p>
+        <button onclick="goBack()" class="back-btn">← BACK TO DASHBOARD</button>
+    </div>
+
+    <!-- Processing Section -->
+    <div class="processing-section">
+        <h2>CAMOUFLAGE DETECTION PROCESSING</h2>
+        <p>Upload multiple images to detect camouflaged objects and personnel</p>
+
+        <!-- Upload Area -->
+        <div class="upload-area" id="image-upload-area">
+            <div class="upload-zone" onclick="document.getElementById('image-files').click()">
+                <div class="upload-icon">📷</div>
+                <p>Click to select images or drag & drop here</p>
+                <p class="upload-limits">Max: 50MB per file | 200MB total</p>
+            </div>
+            <input type="file" id="image-files" multiple accept="image/*" style="display: none;">
+        </div>
+
+        <!-- File List -->
+        <div id="image-file-list" class="file-list"></div>
+
+        <!-- Processing Controls -->
+        <div class="processing-controls">
+            <button id="process-images-btn" onclick="processImages()" disabled>DETECT CAMOUFLAGE</button>
+            <button id="clear-images-btn" onclick="clearImages()">CLEAR ALL</button>
+        </div>
+
+        <!-- Processing Status -->
+        <div id="image-processing-status" class="processing-status"></div>
+
+        <!-- Results Gallery -->
+        <div id="image-results" class="results-section">
+            <h3>DETECTION RESULTS</h3>
+            <div id="image-gallery" class="image-gallery"></div>
+            <div id="image-statistics" class="statistics-panel"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Image Modal for detailed view -->
+<div id="image-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <div class="modal-body">
+            <img id="modal-image" src="" alt="Camouflage Detection Result">
+            <div id="modal-details" class="modal-details"></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/feature6.js') }}"></script>
+<script>
+    function goBack() {
+        window.location.href = '/dashboard';
+    }
+</script>
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/feature6.css') }}">
+{% endblock %}

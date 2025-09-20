@@ -1,0 +1,412 @@
+/* Feature 5 - Military Communication System CSS */
+
+.messaging-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a3a1a 0%, #2d5a2d 50%, #1a3a1a 100%);
+    color: #ffffff;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+}
+
+.messaging-header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #4a7c59;
+    padding-bottom: 20px;
+}
+
+.messaging-header h1 {
+    font-size: 2.2em;
+    margin: 0 0 10px 0;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 2px;
+}
+
+.messaging-header p {
+    margin: 10px 0;
+    font-size: 1.1em;
+    color: #90ee90;
+}
+
+.back-btn {
+    background: #8B0000;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 15px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.back-btn:hover {
+    background: #a00000;
+}
+
+.messaging-content {
+    display: flex;
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Left Panel - Compose */
+.compose-panel {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid #4a7c59;
+    border-radius: 10px;
+    padding: 25px;
+    height: fit-content;
+}
+
+.compose-panel h2 {
+    color: #90ee90;
+    margin-bottom: 25px;
+    font-size: 1.4em;
+    text-align: center;
+    border-bottom: 1px solid #4a7c59;
+    padding-bottom: 10px;
+}
+
+.message-type-section {
+    margin-bottom: 20px;
+}
+
+.message-type-label {
+    display: block;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.message-type-options {
+    display: flex;
+    gap: 20px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.radio-option input[type="radio"] {
+    margin: 0;
+}
+
+.recipient-section {
+    margin-bottom: 20px;
+}
+
+.recipient-section label {
+    display: block;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+#recipientSelect {
+    width: 100%;
+    padding: 10px;
+    background: #2d5a2d;
+    border: 2px solid #4a7c59;
+    border-radius: 5px;
+    color: #ffffff;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+}
+
+#recipientSelect option {
+    background: #2d5a2d;
+    color: #ffffff;
+}
+
+.message-input-section {
+    margin-bottom: 20px;
+}
+
+.message-input-section label {
+    display: block;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+#messageInput {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    background: #2d5a2d;
+    border: 2px solid #4a7c59;
+    border-radius: 5px;
+    color: #ffffff;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+#messageInput:focus {
+    border-color: #90ee90;
+    outline: none;
+}
+
+.character-count {
+    text-align: right;
+    font-size: 12px;
+    color: #90ee90;
+    margin-top: 5px;
+}
+
+.send-btn {
+    width: 100%;
+    background: #228B22;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    transition: background-color 0.3s;
+    margin-bottom: 15px;
+}
+
+.send-btn:hover {
+    background: #32CD32;
+}
+
+.send-btn:disabled {
+    background: #666;
+    cursor: not-allowed;
+}
+
+.send-status {
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.send-status.success {
+    background: rgba(34, 139, 34, 0.3);
+    border: 1px solid #228B22;
+    color: #90ee90;
+}
+
+.send-status.error {
+    background: rgba(139, 0, 0, 0.3);
+    border: 1px solid #8B0000;
+    color: #ffaaaa;
+}
+
+/* Right Panel - Messages */
+.messages-panel {
+    flex: 2;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid #4a7c59;
+    border-radius: 10px;
+    padding: 25px;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.messages-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #4a7c59;
+    padding-bottom: 15px;
+}
+
+.messages-header h2 {
+    color: #90ee90;
+    margin: 0;
+    font-size: 1.4em;
+}
+
+.message-stats {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.unread-badge {
+    background: #8B0000;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.refresh-btn {
+    background: #4a7c59;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    transition: background-color 0.3s;
+}
+
+.refresh-btn:hover {
+    background: #5a8c69;
+}
+
+.messages-list {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #4a7c59;
+    border-radius: 5px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.message-item {
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #4a7c59;
+    position: relative;
+}
+
+.message-item.sent {
+    background: rgba(34, 139, 34, 0.1);
+    border-left-color: #228B22;
+}
+
+.message-item.received {
+    background: rgba(70, 130, 180, 0.1);
+    border-left-color: #4682B4;
+}
+
+.message-item.unread {
+    background: rgba(255, 215, 0, 0.1);
+    border-left-color: #FFD700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: #cccccc;
+}
+
+.message-direction {
+    font-weight: bold;
+    color: #90ee90;
+}
+
+.broadcast-badge {
+    background: #FF6347;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.message-time {
+    color: #999999;
+    font-size: 11px;
+}
+
+.message-content {
+    color: #ffffff;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.unread-indicator {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #FF6347;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.no-messages {
+    text-align: center;
+    padding: 40px;
+    color: #666666;
+}
+
+.no-messages p {
+    margin: 10px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .messaging-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .messages-panel {
+        height: 50vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .messaging-container {
+        padding: 10px;
+    }
+    
+    .messaging-header h1 {
+        font-size: 1.8em;
+    }
+    
+    .message-type-options {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .messages-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .message-stats {
+        justify-content: center;
+    }
+}
+
+/* Scrollbar Styling */
+.messages-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.messages-list::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.3);
+    border-radius: 4px;
+}
+
+.messages-list::-webkit-scrollbar-thumb {
+    background: #4a7c59;
+    border-radius: 4px;
+}
+
+.messages-list::-webkit-scrollbar-thumb:hover {
+    background: #5a8c69;
+}

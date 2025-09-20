@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Commander Dashboard - Soldier Monitoring{% endblock %}
+
+{% block content %}
+<div class="commander-container">
+    <!-- Header -->
+    <div class="commander-header">
+        <h1>SOLDIER ACTIVITY MONITORING</h1>
+        <div class="commander-nav">
+            <a href="{{ url_for('dashboard') }}" class="nav-btn">← MAIN DASHBOARD</a>
+            <span class="commander-info">COMMANDER: {{ username.upper() }}</span>
+        </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number" id="total-soldiers">{{ stats.total_soldiers or 0 }}</div>
+            <div class="stat-label">TOTAL SOLDIERS</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="active-today">{{ stats.active_today or 0 }}</div>
+            <div class="stat-label">ACTIVE TODAY</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="total-actions">
+                {% set total_actions = stats.soldier_summary | sum(attribute='total_actions') if stats.soldier_summary else 0 %}
+                {{ total_actions }}
+            </div>
+            <div class="stat-label">TOTAL ACTIONS</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number online-indicator">ONLINE</div>
+            <div class="stat-label">SYSTEM STATUS</div>
+        </div>
+    </div>
+
+    <!-- Controls Section -->
+    <div class="controls-section">
+        <div class="filter-controls">
+            <div class="control-group">
+                <label for="soldier-filter">FILTER BY SOLDIER:</label>
+                <select id="soldier-filter" class="control-input">
+                    <option value="">ALL SOLDIERS</option>
+                    {% for soldier in stats.soldier_summary %}
+                    <option value="{{ soldier.username }}">{{ soldier.username.upper() }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="action-filter">ACTION TYPE:</label>
+                <select id="action-filter" class="control-input">
+                    <option value="">ALL ACTIONS</option>
+                    <option value="login">LOGIN</option>
+                    <option value="logout">LOGOUT</option>
+                    <option value="feature_access">FEATURE ACCESS</option>
+                    <option value="dashboard_access">DASHBOARD ACCESS</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="date-from">FROM DATE:</label>
+                <input type="date" id="date-from" class="control-input">
+            </div>
+            
+            <div class="control-group">
+                <label for="date-to">TO DATE:</label>
+                <input type="date" id="date-to" class="control-input">
+            </div>
+            
+            <button id="apply-filters" class="control-btn">APPLY FILTERS</button>
+            <button id="clear-filters" class="control-btn secondary">CLEAR</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-monitoring-content">
+        <!-- Left Panel - Activity Logs -->
+        <div class="activity-panel">
+            <div class="panel-header">
+                <h3>RECENT ACTIVITY LOGS</h3>
+                <button id="refresh-logs" class="refresh-btn">⟳ REFRESH</button>
+            </div>
+            
+            <div class="activity-logs" id="activity-logs">
+                <div class="loading">Loading activity logs...</div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Soldier Summary -->
+        <div class="summary-panel">
+            <div class="panel-header">
+                <h3>SOLDIER SUMMARY</h3>
+            </div>
+            
+            <div class="soldier-summary" id="soldier-summary">
+                {% for soldier in stats.soldier_summary %}
+                <div class="soldier-card">
+                    <div class="soldier-name">{{ soldier.username.upper() }}</div>
+                    <div class="soldier-stats">
+                        <div class="stat-item">
+                            <span class="stat-value">{{ soldier.total_actions }}</span>
+                            <span class="stat-desc">Total Actions</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">{{ soldier.active_days }}</span>
+                            <span class="stat-desc">Active Days</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value last-seen">
+                                {% if soldier.last_activity %}
+                                    {{ soldier.last_activity.strftime('%H:%M') }}
+                                {% else %}
+                                    Never
+                                {% endif %}
+                            </span>
+                            <span class="stat-desc">Last Seen</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Popular Features Section -->
+    <div class="features-section">
+        <h3>MOST USED FEATURES</h3>
+        <div class="features-grid">
+            {% for feature in stats.popular_features %}
+            <div class="feature-stat">
+                <div class="feature-name">{{ feature.feature_name.upper() }}</div>
+                <div class="feature-count">{{ feature.usage_count }} USES</div>
+            </div>
+            {% endfor %}
+            
+            {% if not stats.popular_features %}
+            <div class="no-data">NO FEATURE USAGE DATA AVAILABLE</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<script src="{{ url_for('static', filename='js/commander-dashboard.js') }}"></script>
+{% endblock %}

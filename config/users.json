@@ -1,0 +1,24 @@
+{
+  "users": {
+    "captain1": {
+      "password": "pass123",
+      "role": "captain",
+      "features": ["feature1", "feature2", "feature3", "feature4", "feature5", "feature6"]
+    },
+    "soldier1": {
+      "password": "pass123",
+      "role": "soldier", 
+      "features": ["feature1", "feature2", "feature3", "feature4", "feature5", "feature6"]
+    },
+    "soldier2": {
+      "password": "pass123",
+      "role": "soldier", 
+      "features": ["feature1", "feature2", "feature3", "feature4", "feature5", "feature6"]
+    },
+    "soldier3": {
+      "password": "pass123",
+      "role": "soldier", 
+      "features": ["feature1", "feature2", "feature3", "feature4", "feature5", "feature6"]
+    }
+  }
+}

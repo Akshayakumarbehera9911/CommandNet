@@ -1,0 +1,566 @@
+/* Feature 2 - UAV Object Detection Styles */
+
+.feature-container {
+    background-color: #000000;
+    color: #FFFFFF;
+    min-height: 100vh;
+    padding: 2rem;
+    font-family: 'Courier New', monospace;
+}
+
+/* Header Section */
+.feature-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    border-bottom: 2px solid #FFFFFF;
+    padding-bottom: 2rem;
+}
+
+.feature-header h1 {
+    font-size: 2.5rem;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+    color: #00FF00;
+}
+
+.feature-subtitle {
+    font-size: 1rem;
+    color: #CCCCCC;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.back-btn {
+    background-color: #000000;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    padding: 0.75rem 2rem;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+}
+
+.back-btn:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+/* Upload Section */
+.upload-section {
+    margin-bottom: 3rem;
+}
+
+.upload-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #00FF00;
+}
+
+.upload-area {
+    border: 3px dashed #FFFFFF;
+    padding: 3rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #000000;
+    margin-bottom: 2rem;
+}
+
+.upload-area:hover,
+.upload-area.dragover {
+    border-color: #00FF00;
+    background-color: #001100;
+}
+
+.upload-content .upload-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.upload-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.upload-content p {
+    margin-bottom: 0.5rem;
+    color: #CCCCCC;
+}
+
+.upload-info {
+    font-size: 0.9rem;
+    color: #999999;
+    margin-bottom: 1.5rem !important;
+}
+
+.select-btn {
+    background-color: #00FF00;
+    color: #000000;
+    border: none;
+    padding: 1rem 2rem;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.select-btn:hover {
+    background-color: #FFFFFF;
+}
+
+/* File List */
+.file-list {
+    border: 2px solid #FFFFFF;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.file-list h3 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: #00FF00;
+}
+
+.file-items {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    border-bottom: 1px solid #333333;
+    background-color: #111111;
+    margin-bottom: 0.5rem;
+}
+
+.file-info {
+    flex: 1;
+}
+
+.file-name {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.file-size {
+    font-size: 0.9rem;
+}
+
+.size-ok {
+    color: #00FF00;
+}
+
+.size-error {
+    color: #FF0000;
+}
+
+.remove-file {
+    background-color: #FF0000;
+    color: #FFFFFF;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+}
+
+.upload-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.process-btn, .clear-btn {
+    padding: 0.75rem 2rem;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: 2px solid;
+}
+
+.process-btn {
+    background-color: #00FF00;
+    color: #000000;
+    border-color: #00FF00;
+}
+
+.process-btn:hover {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+
+.clear-btn {
+    background-color: #FF0000;
+    color: #FFFFFF;
+    border-color: #FF0000;
+}
+
+.clear-btn:hover {
+    background-color: #FFFFFF;
+    color: #FF0000;
+}
+
+/* Progress Section */
+.progress-section {
+    text-align: center;
+    border: 2px solid #FFFFFF;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.progress-section h3 {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: #00FF00;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 30px;
+    background-color: #333333;
+    border: 2px solid #FFFFFF;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #00FF00;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.progress-text {
+    font-size: 1rem;
+    color: #CCCCCC;
+    letter-spacing: 1px;
+}
+
+/* Results Section */
+.results-section {
+    border-top: 2px solid #FFFFFF;
+    padding-top: 2rem;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.results-header h2 {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: #00FF00;
+}
+
+.results-controls {
+    display: flex;
+    gap: 1rem;
+}
+
+.download-btn, .new-scan-btn {
+    padding: 0.75rem 1.5rem;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: 2px solid;
+}
+
+.download-btn {
+    background-color: #0066FF;
+    color: #FFFFFF;
+    border-color: #0066FF;
+}
+
+.download-btn:hover {
+    background-color: #FFFFFF;
+    color: #0066FF;
+}
+
+.new-scan-btn {
+    background-color: #FFFF00;
+    color: #000000;
+    border-color: #FFFF00;
+}
+
+.new-scan-btn:hover {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+
+
+
+/* Results Gallery */
+.results-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.result-card {
+    border: 2px solid #FFFFFF;
+    background-color: #111111;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.result-card:hover {
+    border-color: #00FF00;
+    transform: translateY(-2px);
+}
+
+.error-card {
+    border-color: #FF0000;
+}
+
+.result-image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.result-image-container img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.result-image-container img:hover {
+    transform: scale(1.05);
+}
+
+.detection-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(0, 255, 0, 0.9);
+    color: #000000;
+    padding: 0.5rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.result-info {
+    padding: 1rem;
+}
+
+.result-info h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #FFFFFF;
+    word-break: break-word;
+}
+
+.detection-summary {
+    font-size: 0.9rem;
+}
+
+.no-detections {
+    color: #999999;
+}
+
+.detection-classes {
+    color: #00FF00;
+}
+
+.error-content {
+    padding: 2rem;
+    text-align: center;
+}
+
+.error-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.error-message {
+    color: #FF0000;
+    font-size: 0.9rem;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    position: relative;
+    margin: 2% auto;
+    width: 90%;
+    max-width: 1200px;
+    background-color: #000000;
+    border: 2px solid #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    max-height: 95vh;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #FFFFFF;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close:hover {
+    color: #FF0000;
+}
+
+.modal-image {
+    width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    background-color: #000000;
+}
+
+.modal-info {
+    padding: 1.5rem;
+    border-top: 2px solid #FFFFFF;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.modal-info h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: #00FF00;
+}
+
+.detection-details {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.detection-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #333333;
+    margin-bottom: 0.5rem;
+}
+
+.detection-class {
+    font-weight: bold;
+    color: #00FF00;
+    flex: 1;
+}
+
+.detection-confidence {
+    color: #FFFF00;
+    margin: 0 1rem;
+}
+
+.detection-bbox {
+    color: #CCCCCC;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .feature-container {
+        padding: 1rem;
+    }
+    
+    .feature-header h1 {
+        font-size: 2rem;
+    }
+    
+    .upload-area {
+        padding: 2rem 1rem;
+    }
+    
+    .upload-controls,
+    .results-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .results-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .results-gallery {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+    }
+    
+    .detection-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+}
+
+/* Scrollbar Styling */
+.file-items::-webkit-scrollbar,
+.detection-details::-webkit-scrollbar,
+.modal-info::-webkit-scrollbar {
+    width: 8px;
+}
+
+.file-items::-webkit-scrollbar-track,
+.detection-details::-webkit-scrollbar-track,
+.modal-info::-webkit-scrollbar-track {
+    background: #333333;
+}
+
+.file-items::-webkit-scrollbar-thumb,
+.detection-details::-webkit-scrollbar-thumb,
+.modal-info::-webkit-scrollbar-thumb {
+    background: #FFFFFF;
+}
+
+.file-items::-webkit-scrollbar-thumb:hover,
+.detection-details::-webkit-scrollbar-thumb:hover,
+.modal-info::-webkit-scrollbar-thumb:hover {
+    background: #00FF00;
+}

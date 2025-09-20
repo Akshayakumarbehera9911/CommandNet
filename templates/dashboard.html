@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}Military Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Rolling Notice Banner -->
+    <div class="notice-banner">
+        <div class="notice-text">
+            *** SECURE MILITARY NETWORK *** AUTHORIZED PERSONNEL ONLY *** CLASSIFIED OPERATIONS IN PROGRESS *** 
+        </div>
+    </div>
+    
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="left-panel">
+            <h1 class="dashboard-title">READY FOR WAR</h1>
+            
+            <!-- Weather Section -->
+            <div class="weather-section">
+                <div class="weather-header">
+                    <h3>WEATHER CONDITIONS</h3>
+                    <div class="weather-location">
+                        <input type="text" id="location-input" placeholder="Enter city name" value="{{ weather.city }}">
+                        <button id="update-weather-btn" class="weather-btn">UPDATE</button>
+                    </div>
+                </div>
+                
+                <div class="weather-status">
+                    <div class="weather-main-info">
+                        <span class="location-display">{{ weather.city }}, {{ weather.country }}</span>
+                        <span class="weather-desc">{{ weather.weather_desc }}</span>
+                    </div>
+                    <div class="weather-icon">
+                        <span class="weather-emoji" id="weather-emoji">🌤️</span>
+                    </div>
+                </div>
+                
+                <div class="weather-grid">
+                    <div class="weather-item">
+                        <span class="weather-label">TEMPERATURE:</span>
+                        <span class="weather-value green" id="temperature">{{ weather.temperature }}°C</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">FEELS LIKE:</span>
+                        <span class="weather-value green" id="feels-like">{{ weather.feels_like }}°C</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">HUMIDITY:</span>
+                        <span class="weather-value yellow" id="humidity">{{ weather.humidity }}%</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">PRESSURE:</span>
+                        <span class="weather-value yellow" id="pressure">{{ weather.pressure }} hPa</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">WIND SPEED:</span>
+                        <span class="weather-value green" id="wind-speed">{{ weather.wind_speed }} m/s</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">WIND DIRECTION:</span>
+                        <span class="weather-value green" id="wind-direction">{{ weather.wind_deg }}°</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">VISIBILITY:</span>
+                        <span class="weather-value red" id="visibility">{{ weather.visibility }} km</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">CLOUD COVER:</span>
+                        <span class="weather-value yellow" id="clouds">{{ weather.clouds }}%</span>
+                    </div>
+                </div>
+                
+                <div class="sun-times">
+                    <div class="sun-item">
+                        <span class="sun-label">SUNRISE:</span>
+                        <span class="sun-value" id="sunrise">--:--</span>
+                    </div>
+                    <div class="sun-item">
+                        <span class="sun-label">SUNSET:</span>
+                        <span class="sun-value" id="sunset">--:--</span>
+                    </div>
+                </div>
+                
+                <div class="weather-status-indicator" id="weather-status">
+                    <span class="status-dot {{ 'green' if weather.status == 'success' else 'red' }}"></span>
+                    <span>{{ 'ONLINE' if weather.status == 'success' else 'OFFLINE' }}</span>
+                </div>
+            </div>
+            
+            <!-- Commander Monitoring Section (Only for Captains) -->
+            {% if role == 'captain' %}
+            <div class="commander-access-section">
+                <div class="commander-header">
+                    <h3>COMMAND OPERATIONS</h3>
+                    <div class="command-status">
+                        <span class="status-dot green"></span>
+                        <span>COMMAND ACCESS GRANTED</span>
+                    </div>
+                </div>
+                
+                <div class="commander-controls">
+                    <div class="commander-card" onclick="window.location.href='/commander-dashboard'">
+                        <div class="commander-icon">📊</div>
+                        <div class="commander-info">
+                            <h4>SOLDIER MONITORING</h4>
+                            <p>Real-time activity tracking and soldier statistics</p>
+                        </div>
+                        <div class="commander-arrow">→</div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- User Information -->
+            <div class="user-info">
+                <p><strong>OPERATOR:</strong> {{ username.upper() }}</p>
+                <p><strong>RANK:</strong> {{ role.upper() }}</p>
+                <p><strong>STATUS:</strong> <span class="green">ACTIVE</span></p>
+                <p><strong>TIMESTAMP:</strong> <span id="current-time"></span></p>
+            </div>
+        </div>
+        
+        <!-- Feature Menu -->
+        <div class="right-panel">
+            <h3>AVAILABLE OPERATIONS</h3>
+            <div class="feature-menu">
+                {% for feature in features %}
+                    <div class="feature-card" onclick="window.location.href='/{{ feature.id }}'">
+                        <h4>{{ feature.name.upper() }}</h4>
+                        <p>Click to access {{ feature.name.lower() }}</p>
+                    </div>
+                {% endfor %}
+                
+                {% if not features %}
+                    <div class="no-features">
+                        <p>NO OPERATIONS AVAILABLE FOR YOUR CLEARANCE LEVEL</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="logout-section">
+                <a href="{{ url_for('logout') }}" class="logout-btn">LOGOUT</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

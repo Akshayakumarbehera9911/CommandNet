@@ -1,0 +1,34 @@
+{
+  "features": {
+    "feature1": {
+      "name": "Battlefield Decision Support",
+      "roles": ["soldier", "captain"],
+      "active": true
+    },
+    "feature2": {
+      "name": "UAV Object Detection",
+      "roles": ["captain", "soldier"],
+      "active": true
+    },
+    "feature3": {
+      "name": "Image & Video Processing",
+      "roles": ["captain", "soldier"],
+      "active": true
+    },
+    "feature4": {
+      "name": "Live Detection System",
+      "roles": ["captain", "soldier"],
+      "active": true
+    },
+    "feature5": {
+      "name": "Military Communication",
+      "roles": ["captain", "soldier"],
+      "active": true
+    },
+    "feature6": {
+      "name": "camouflage detection",
+      "roles": ["captain", "soldier"],
+      "active": true
+    }
+  }
+}

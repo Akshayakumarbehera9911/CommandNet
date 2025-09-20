@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battlefield Decision Support AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .feature-container {
+            min-height: 100vh;
+            background-color: #000000;
+            color: #FFFFFF;
+            font-family: 'Courier New', monospace;
+        }
+
+        .feature-header {
+            background-color: #000000;
+            border-bottom: 1px solid #00FF00;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .feature-subtitle {
+            font-size: 11px;
+            color: #00FF00;
+            letter-spacing: 0.5px;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #FF0000;
+            color: #FFFFFF;
+            border: none;
+            padding: 8px 16px;
+            text-decoration: none;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 12px;
+            border-radius: 3px;
+            transition: opacity 0.2s ease;
+        }
+
+        .back-btn:hover {
+            opacity: 0.8;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 40px;
+            min-height: calc(100vh - 100px);
+        }
+
+        .input-panel {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 25px;
+            height: fit-content;
+        }
+
+        .results-panel {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 25px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #00FF00;
+            padding-bottom: 8px;
+            color: #00FF00;
+        }
+
+        .battlefield-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            margin-bottom: 6px;
+            color: #00FF00;
+            font-weight: normal;
+        }
+
+        .form-group input[type="number"],
+        .form-group select {
+            padding: 8px 12px;
+            background-color: #111;
+            border: 1px solid #333;
+            color: #FFFFFF;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            border-radius: 4px;
+            height: 36px;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input[type="number"]:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #00FF00;
+        }
+
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slider-group label {
+            font-size: 12px;
+            margin-bottom: 8px;
+            color: #00FF00;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slider {
+            flex: 1;
+            height: 4px;
+            background: #333;
+            outline: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #00FF00;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .slider-value {
+            min-width: 24px;
+            text-align: center;
+            font-weight: bold;
+            color: #00FF00;
+            background: #111;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .radio-btn {
+            background: #111;
+            color: #FFFFFF;
+            border: 1px solid #333;
+            padding: 6px 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .radio-btn.active {
+            background: #00FF00;
+            color: #000;
+            border-color: #00FF00;
+        }
+
+        .radio-btn:hover {
+            border-color: #00FF00;
+        }
+
+        .radio-group input[type="radio"] {
+            display: none;
+        }
+
+        .analyze-btn {
+            background-color: #00FF00;
+            color: #000000;
+            border: none;
+            padding: 12px 24px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .analyze-btn:hover:not(:disabled) {
+            background-color: #33FF33;
+        }
+
+        .analyze-btn:disabled {
+            background-color: #333;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .results-content {
+            display: none;
+        }
+
+        .results-content.active {
+            display: block;
+        }
+
+        .processing-animation {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .processing-animation.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #333;
+            border-top: 3px solid #00FF00;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tactical-option {
+            border: 1px solid #333;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            background: #111;
+        }
+
+        .option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+
+        .option-rank {
+            background-color: #FFFF00;
+            color: #000000;
+            padding: 4px 12px;
+            font-weight: bold;
+            font-size: 11px;
+            border-radius: 3px;
+        }
+
+        .option-name {
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .option-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 10px;
+            border: 1px solid #333;
+            border-radius: 3px;
+            background: #0a0a0a;
+            font-size: 11px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #ccc;
+        }
+
+        .success-high { color: #00FF00; }
+        .success-medium { color: #FFFF00; }
+        .success-low { color: #FF6600; }
+        .risk-low { color: #00FF00; }
+        .risk-medium { color: #FFFF00; }
+        .risk-high { color: #FF6600; }
+        .risk-critical { color: #FF0000; }
+
+        .analysis-section {
+            border: 1px solid #333;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 6px;
+            background: #111;
+        }
+
+        .analysis-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #00FF00;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .another-analysis-btn {
+            background-color: #FFFF00;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .another-analysis-btn:hover {
+            background-color: #FFFF33;
+        }
+
+        .waiting-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-style: italic;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+                gap: 25px;
+            }
+            
+            .option-details,
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="feature-container">
+        <div class="feature-header">
+            <a href="/dashboard" class="back-btn">← DASHBOARD</a>
+            <h1 class="feature-title">BATTLEFIELD DECISION SUPPORT AI</h1>
+            <p class="feature-subtitle">Advanced Military Decision Making Under Uncertainty</p>
+        </div>
+
+        <div class="main-container">
+            <div class="input-panel">
+                <h2 class="section-title">MISSION BRIEFING</h2>
+                
+                <form id="battlefield-form" class="battlefield-form">
+                    <div class="form-group">
+                        <label for="friendly_forces">FRIENDLY FORCES COUNT:</label>
+                        <input type="number" id="friendly_forces" name="friendly_forces" min="1" max="10000" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="enemy_forces">ENEMY FORCES COUNT (ESTIMATED):</label>
+                        <input type="number" id="enemy_forces" name="enemy_forces" min="0" max="10000" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="terrain">TERRAIN TYPE:</label>
+                        <select id="terrain" name="terrain" required>
+                            <option value="">Select Terrain</option>
+                            <option value="urban">Urban</option>
+                            <option value="forest">Forest</option>
+                            <option value="desert">Desert</option>
+                            <option value="mountain">Mountain</option>
+                            <option value="plains">Plains</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="weather">WEATHER CONDITIONS:</label>
+                        <select id="weather" name="weather" required>
+                            <option value="">Select Weather</option>
+                            <option value="clear">Clear</option>
+                            <option value="rain">Rain</option>
+                            <option value="fog">Fog</option>
+                            <option value="storm">Storm</option>
+                            <option value="snow">Snow</option>
+                        </select>
+                    </div>
+
+                    <div class="slider-group">
+                        <label>VISIBILITY (1-10 SCALE):</label>
+                        <div class="slider-container">
+                            <input type="range" id="visibility" name="visibility" min="1" max="10" value="5" class="slider">
+                            <span class="slider-value" id="visibility-value">5</span>
+                        </div>
+                    </div>
+
+                    <div class="slider-group">
+                        <label>INTELLIGENCE CONFIDENCE (1-10 SCALE):</label>
+                        <div class="slider-container">
+                            <input type="range" id="intel_confidence" name="intel_confidence" min="1" max="10" value="5" class="slider">
+                            <span class="slider-value" id="intel-value">5</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mission_type">MISSION TYPE:</label>
+                        <select id="mission_type" name="mission_type" required>
+                            <option value="">Select Mission</option>
+                            <option value="assault">Assault</option>
+                            <option value="defense">Defense</option>
+                            <option value="reconnaissance">Reconnaissance</option>
+                            <option value="extraction">Extraction</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time_constraint">TIME CONSTRAINT:</label>
+                        <select id="time_constraint" name="time_constraint" required>
+                            <option value="">Select Time Constraint</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="flexible">Flexible</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>CIVILIANS PRESENT:</label>
+                        <div class="radio-group">
+                            <input type="radio" name="civilian_presence" value="true" id="civilian_yes" required>
+                            <label for="civilian_yes" class="radio-btn" onclick="selectRadio('civilian_yes')">YES</label>
+                            
+                            <input type="radio" name="civilian_presence" value="false" id="civilian_no" required>
+                            <label for="civilian_no" class="radio-btn" onclick="selectRadio('civilian_no')">NO</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="analyze-btn" class="analyze-btn">
+                        ANALYZE BATTLEFIELD SCENARIO
+                    </button>
+                </form>
+            </div>
+
+            <div class="results-panel">
+                <h2 class="section-title">TACTICAL ANALYSIS</h2>
+                
+                <div id="waiting-message" class="waiting-message">
+                    Enter mission parameters and click "ANALYZE BATTLEFIELD SCENARIO" to begin tactical analysis.
+                </div>
+
+                <div id="processing-animation" class="processing-animation">
+                    <div class="spinner"></div>
+                    <p>AI PROCESSING...</p>
+                    <p>Running Monte Carlo simulations...</p>
+                    <p>Analyzing fog of war conditions...</p>
+                    <p>Applying game theory models...</p>
+                </div>
+
+                <div id="results-content" class="results-content">
+                    <h3>TACTICAL RECOMMENDATIONS (Ranked by Success Probability)</h3>
+                    <div id="tactical-options"></div>
+
+                    <div class="analysis-section">
+                        <div class="analysis-title">🌫️ FOG OF WAR ANALYSIS</div>
+                        <div class="analysis-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Uncertainty Factor:</span>
+                                <span id="uncertainty-factor">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Intelligence Quality:</span>
+                                <span id="intel-quality">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Visibility Conditions:</span>
+                                <span id="visibility-conditions">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-section">
+                        <div class="analysis-title">⚖️ FORCE ANALYSIS</div>
+                        <div class="analysis-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Force Ratio:</span>
+                                <span id="force-ratio">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Assessment:</span>
+                                <span id="force-assessment">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-section">
+                        <div class="analysis-title">COMMANDER'S RECOMMENDATION</div>
+                        <div class="analysis-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Execute:</span>
+                                <span id="recommended-action">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Rationale:</span>
+                                <span id="recommendation-rationale">-</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Confidence:</span>
+                                <span id="recommendation-confidence">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="another-analysis-btn" class="another-analysis-btn">
+                        ANALYZE ANOTHER SCENARIO
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/feature1.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Defense Detection System{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/feature4.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="feature4-container">
+    <!-- Header -->
+    <div class="header-section">
+        <button class="back-btn" onclick="window.location.href='/dashboard'">
+            ← BACK TO DASHBOARD
+        </button>
+        <h1 class="feature-title">DEFENSE DETECTION SYSTEM</h1>
+        <div class="status-indicator" id="status-indicator">
+            <span class="status-dot" id="status-dot"></span>
+            <span class="status-text" id="status-text">OFFLINE</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Left Panel - Large Live Feed -->
+        <div class="left-panel">
+            <div class="video-container">
+                <div class="video-header">
+                    <span>LIVE DETECTION FEED</span>
+                    <div class="fps-counter" id="fps-counter">0 FPS</div>
+                </div>
+                <div class="video-frame" id="video-frame">
+                    <div class="no-feed-message">
+                        <i class="icon">📡</i>
+                        <p>SELECT CAMERA AND START DETECTION</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls-section">
+                <div class="camera-select-container">
+                    <label for="camera-select">CAMERA SOURCE:</label>
+                    <select id="camera-select" class="camera-dropdown">
+                        <option value="">LOADING CAMERAS...</option>
+                        {% for camera in cameras %}
+                        <option value="{{ camera.id }}">{{ camera.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="control-buttons">
+                    <button id="start-btn" class="control-btn start-btn" disabled>
+                        <span class="btn-icon">▶</span>
+                        START
+                    </button>
+                    <button id="stop-btn" class="control-btn stop-btn" disabled>
+                        <span class="btn-icon">⏹</span>
+                        STOP
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Detection Log Only -->
+        <div class="right-panel">
+            <div class="detection-log-container">
+                <div class="log-header">
+                    <span>DETECTION LOG</span>
+                    <div class="detection-count" id="detection-count">0 OBJECTS</div>
+                </div>
+                <div class="log-content" id="detection-log">
+                    <div class="log-empty">
+                        <p>NO DETECTIONS</p>
+                        <small>OBJECTS WILL APPEAR HERE WHEN DETECTION STARTS</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom URL Modal -->
+    <div id="url-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>ENTER CAMERA URL</h3>
+                <span class="modal-close" onclick="closeUrlModal()">×</span>
+            </div>
+            <div class="modal-body">
+                <label for="camera-url">CAMERA URL:</label>
+                <input type="text" id="camera-url" placeholder="http://192.168.1.100:8080/video or rtsp://...">
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeUrlModal()" class="btn-secondary">CANCEL</button>
+                <button onclick="setCustomUrl()" class="btn-primary">CONNECT</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <p>INITIALIZING CAMERA...</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/feature4.js') }}"></script>
+{% endblock %}

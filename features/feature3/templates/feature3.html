@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% block title %}Advanced Object Detection - Military WebApp{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/feature3.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="feature3-container">
+    <!-- Header -->
+    <div class="feature-header">
+        <h1>ADVANCED OBJECT DETECTION SYSTEM</h1>
+        <p> Multi-Modal Detection Platform</p>
+        <button onclick="goBack()" class="back-btn">← BACK TO DASHBOARD</button>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tab-navigation">
+        <button class="tab-btn active" onclick="showTab('images')">IMAGE PROCESSING</button>
+        <button class="tab-btn" onclick="showTab('videos')">VIDEO PROCESSING</button>
+    </div>
+
+    <!-- Image Processing Tab -->
+    <div id="images-tab" class="tab-content active">
+        <div class="processing-section">
+            <h2>📷 BATCH IMAGE PROCESSING</h2>
+            <p>Upload multiple images for object detection analysis</p>
+
+            <!-- Detection Filter Options -->
+            <div class="detection-filters">
+                <h3>DETECTION FILTER</h3>
+                <div class="filter-options">
+                    <label class="filter-option">
+                        <input type="checkbox" name="image-filter" value="all" id="image-filter-all" checked>
+                        <span>ALL OBJECTS</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" name="image-filter" value="person" id="image-filter-person">
+                        <span>PERSON</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" name="image-filter" value="car" id="image-filter-car">
+                        <span>VEHICLES</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="image-upload-area">
+                <div class="upload-zone" onclick="document.getElementById('image-files').click()">
+                    <div class="upload-icon">📁</div>
+                    <p>Click to select images or drag & drop here</p>
+                    <p class="upload-limits">Max: 50MB per file | 200MB total</p>
+                </div>
+                <input type="file" id="image-files" multiple accept="image/*" style="display: none;">
+            </div>
+
+            <!-- File List -->
+            <div id="image-file-list" class="file-list"></div>
+
+            <!-- Processing Controls -->
+            <div class="processing-controls">
+                <button id="process-images-btn" onclick="processImages()" disabled>PROCESS IMAGES</button>
+                <button id="clear-images-btn" onclick="clearImages()">CLEAR ALL</button>
+            </div>
+
+            <!-- Processing Status -->
+            <div id="image-processing-status" class="processing-status"></div>
+
+            <!-- Results Gallery -->
+            <div id="image-results" class="results-section">
+                <h3>DETECTION RESULTS</h3>
+                <div id="image-gallery" class="image-gallery"></div>
+                <div id="image-statistics" class="statistics-panel"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Processing Tab -->
+    <div id="videos-tab" class="tab-content">
+        <div class="processing-section">
+            <h2>🎥 BATCH VIDEO PROCESSING</h2>
+            <p>Upload multiple videos for frame-by-frame object detection</p>
+
+            <!-- Detection Filter Options -->
+            <div class="detection-filters">
+                <h3>DETECTION FILTER</h3>
+                <div class="filter-options">
+                    <label class="filter-option">
+                        <input type="checkbox" name="video-filter" value="all" id="video-filter-all" checked>
+                        <span>ALL OBJECTS</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" name="video-filter" value="person" id="video-filter-person">
+                        <span>PERSON</span>
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" name="video-filter" value="car" id="video-filter-car">
+                        <span>VEHICLES</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="video-upload-area">
+                <div class="upload-zone" onclick="document.getElementById('video-files').click()">
+                    <div class="upload-icon">🎬</div>
+                    <p>Click to select videos or drag & drop here</p>
+                    <p class="upload-limits">Max: 50MB per file | 200MB total</p>
+                </div>
+                <input type="file" id="video-files" multiple accept="video/*" style="display: none;">
+            </div>
+
+            <!-- File List -->
+            <div id="video-file-list" class="file-list"></div>
+
+            <!-- Processing Controls -->
+            <div class="processing-controls">
+                <button id="process-videos-btn" onclick="processVideos()" disabled>PROCESS VIDEOS</button>
+                <button id="cancel-videos-btn" onclick="cancelVideoProcessing()" disabled style="display: none;">CANCEL PROCESSING</button>
+                <button id="clear-videos-btn" onclick="clearVideos()">CLEAR ALL</button>
+            </div>
+
+            <!-- Processing Status -->
+            <div id="video-processing-status" class="processing-status"></div>
+
+            <!-- Results -->
+            <div id="video-results" class="results-section">
+                <h3>PROCESSING RESULTS</h3>
+                <div id="video-list" class="video-list"></div>
+                <div id="video-statistics" class="statistics-panel"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Image Modal for detailed view -->
+<div id="image-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">×</span>
+        <div class="modal-body">
+            <img id="modal-image" src="" alt="Detection Result">
+            <div id="modal-details" class="modal-details"></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/feature3.js') }}"></script>
+<script>
+
+    function goBack() {
+        window.location.href = '/dashboard';
+    }
+</script>
+{% endblock %}
