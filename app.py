@@ -46,7 +46,7 @@ def load_features():
 
 # Enhanced weather function with comprehensive data
 def get_weather(city="Delhi"):
-    api_key = "f8031cf783ffad54fbeb740459022fe1"
+    api_key = "write your own api key"
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
     try:
         response = requests.get(url, timeout=5)
